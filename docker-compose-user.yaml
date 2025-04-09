@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  frontend:
+    image: milanbhatiya59/e-commerce-microservices-frontend
+    ports:
+      - '5173:5173'
+
+  restaurant-service:
+    image: milanbhatiya59/e-commerce-microservices-restaurant
+    ports:
+      - '3001:3000'
+
+  menu-service:
+    image: milanbhatiya59/e-commerce-microservices-menu
+    ports:
+      - '3002:3000'
+
+  order-service:
+    image: milanbhatiya59/e-commerce-microservices-order
+    ports:
+      - '3003:3000'
+
+  delivery-service:
+    image: milanbhatiya59/e-commerce-microservices-delivery
+    ports:
+      - '3004:3000'
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - restaurant-service
+      - menu-service
+      - order-service
+      - delivery-service
